@@ -21,12 +21,14 @@ const server = http.createServer((req, res) => {
         }
     }
     if (req.method === "POST") {
-        console.log(body);
         res.statusCode = 201;
-        scores.push(body);
-        // res.setHeader('Content-Type', 'application/javascript');
+        scores.push(body);  
     }
-        body = JSON.stringify(scores);
+        let sortScores = scores.sort(function(a,b) {
+            return b.score - a.score;
+        });
+        let topScores = sortScores.slice(0,3);
+        body = JSON.stringify(topScores);
         res.end(body);
 });
 });
